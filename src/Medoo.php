@@ -335,6 +335,8 @@ class Medoo
 
 	public function exec($query, $map = [])
 	{
+		$this->statement = null;
+
 		if ($this->debug_mode)
 		{
 			echo $this->generate($query, $map);
@@ -803,6 +805,8 @@ class Medoo
 						case 'integer':
 						case 'double':
 						case 'boolean':
+							$stack[] = $column . ' = ' . ($value ? 'true' : 'false');
+							break;
 						case 'string':
 							$stack[] = $column . ' = ' . $map_key;
 							$map[ $map_key ] = $this->typeMap($value, $type);
